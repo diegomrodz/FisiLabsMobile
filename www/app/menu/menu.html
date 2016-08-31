@@ -1,0 +1,152 @@
+<!--View Information-->
+<!--View name : Menu-->
+<!--Controller name : menuCtrl-->
+<!--Controller path : www/templates/menu/js/controllers.js-->
+<!--State name : app-->
+<!--URL : #app-->
+
+<ion-side-menus enable-menu-with-back-views="false">
+    <ion-side-menu-content>
+        <ion-nav-bar class="bar-balanced  material-background-nav-bar">
+            <ion-nav-buttons side="left">
+                <a class="button button-icon button-clear ion-navicon" menu-toggle="left" ng-click="toggleLeft()"></a>
+            </ion-nav-buttons>
+        </ion-nav-bar>
+        <ion-nav-view name="menuContent"></ion-nav-view>
+    </ion-side-menu-content>
+    <md-sidenav md-component-id="left" on-swipe-left="closeSideNav()" on-drag-left="closeSideNav()">
+        <!--menu section-->
+        <div class="material-background" id="toggle-menu-left-header">
+            <!--menu header section-->
+            <div class="menu-left-header">
+                <img class="user-img" src="img/profileAvatar.jpg">
+
+                <p>
+                    <span class="title">Nome do Usuário</span>
+                    <br/>
+                    <span class="sub-title">usuário@email.com</span>
+                </p>
+            </div><!--end menu header section-->
+        </div> <!--menu content section-->
+        <ion-content id="toggle-menu-left-content">
+
+            <!--If device is android application will present below code.-->
+            <!--It will disable animation to better performance on android.-->
+            <!--list section-->
+            <div ng-if="isAndroid" class="menu-list">
+                <md-subheader class="md-warn">Navegação</md-subheader>
+                <div class="row menu-item"  ng-click="navigateTo('app.dashboard')">
+                    <div class="col-33">
+                        <i class="fa fa-home"></i>
+                    </div>
+                    <div class="col-66">
+                        <span>Home</span>
+                    </div>
+                </div>
+                <div class="row menu-item"  ng-click="navigateTo('app.contractlist')">
+                    <div class="col-33">
+                        <i class="fa fa-search"></i>
+                    </div>
+                    <div class="col-66">
+                        <span>Pesquisar</span>
+                    </div>
+                </div>
+                <div class="row menu-item"  ng-click="navigateTo('app.contractlist')">
+                    <div class="col-33">
+                        <i class="fa fa-info"></i>
+                    </div>
+                    <div class="col-66">
+                        <span>Sobre</span>
+                    </div>
+                </div>
+                <div class="row menu-item"  ng-click="navigateTo('app.contractlist')">
+                    <div class="col-33">
+                        <i class="fa fa-question"></i>
+                    </div>
+                    <div class="col-66">
+                        <span>Ajuda</span>
+                    </div>
+                </div>
+                <md-subheader class="md-warn">Áreas do Usuário</md-subheader>
+                <div class="row menu-item"  ng-click="navigateTo('app.contractlist')">
+                    <div class="col-33">
+                        <i class="fa fa-university"></i>
+                    </div>
+                    <div class="col-66">
+                        <span>Salas de Aula</span>
+                    </div>
+                </div>
+                <div class="row menu-item" ng-click="navigateTo('app.notelist')">
+                    <div class="col-33">
+                        <i class="fa fa-flask"></i>
+                    </div>
+                    <div class="col-66">
+                        <span>Experimentos</span>
+                    </div>
+                </div>
+                <div class="row menu-item" ng-click="navigateTo('app.notelist')">
+                    <div class="col-33">
+                        <i class="fa fa-gear"></i>
+                    </div>
+                    <div class="col-66">
+                        <span>Configurações</span>
+                    </div>
+                </div>
+                <md-subheader class="md-warn">Mais Opções</md-subheader>
+                <div class="row menu-item" ng-click="navigateTo('app.notelist')">
+                    <div class="col-33">
+                        <i class="fa fa-reply"></i>
+                    </div>
+                    <div class="col-66">
+                        <span>Sair</span>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <!--If device is not Android application will present below code.-->
+            <!--It will show animation when selecting row.-->
+            <md-list ng-if="!isAndroid">
+                <md-subheader class="md-warn">Application Storage</md-subheader>
+                <md-list-item class="menu-list-item" ng-click="navigateTo('app.dashboard')">
+                    <i class="fa fa-home"></i>
+                    <span>Home</span>
+                </md-list-item>
+                <md-list-item class="menu-list-item" ng-click="navigateTo('app.notelist')">
+                    <i class="fa fa-search"></i>
+                    <span>Pesquisar</span>
+                </md-list-item>
+                <md-list-item class="menu-list-item" ng-click="navigateTo('app.notelist')">
+                    <i class="fa fa-info"></i>
+                    <span>Sobre</span>
+                </md-list-item>
+                <md-list-item class="menu-list-item" ng-click="navigateTo('app.notelist')">
+                    <i class="fa fa-question"></i>
+                    <span>Ajuda</span>
+                </md-list-item>
+                <md-subheader class="md-warn">Áreas do Usuário</md-subheader>
+                <md-list-item class="menu-list-item" ng-click="navigateTo('app.notelist')">
+                    <i class="fa fa-university"></i>
+                    <span>Salas de Aula</span>
+                </md-list-item>
+                <md-list-item class="menu-list-item" ng-click="navigateTo('app.notelist')">
+                    <i class="fa fa-flask"></i>
+                    <span>Experimentos</span>
+                </md-list-item>
+                <md-list-item class="menu-list-item" ng-click="navigateTo('app.notelist')">
+                    <i class="fa fa-gear"></i>
+                    <span>Configurações</span>
+                </md-list-item>
+                <md-subheader class="md-warn">Mais Opções</md-subheader>
+                <md-list-item class="menu-list-item" ng-click="navigateTo('app.notelist')">
+                    <i class="fa fa-reply"></i>
+                    <span>Sair</span>
+                </md-list-item>
+            </md-list>
+            <!--end list section-->
+        </ion-content><!--end menu content section-->
+        <!--end menu section-->
+
+    </md-sidenav>
+</ion-side-menus>

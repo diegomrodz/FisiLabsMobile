@@ -1,0 +1,41 @@
+<ion-view view-title="Home">
+
+	<ion-content id="home-feed">
+		
+		<ion-refresher pulling-text="Atualizar" on-refresh=""></ion-refresher>
+
+		<!--social card section-->
+            <md-card ng-repeat="i in [1,2,3,4]" ng-click="navigateTo('app.classroom', {classroomId: 1})" class="social-card">
+                <md-card-content>
+                    <md-list-item class="md-2-line md-no-proxy" role="listitem">
+                        
+                        <div class="md-list-item-text">
+                            <h3>Nome da Sala de Aula</h3>
+
+                            <p>Instrutor: Nome do Instrutor</p>
+                        </div>
+                    </md-list-item>
+                    <p>Breve descrição da sala de aula, blah, blah...</p>
+                </md-card-content>
+
+                <!--social card footer section-->
+                <div class="social-card-footer">
+                    <div class="row-content" layout="row">
+                        <div class="col-33">
+                            15 <span>Alunos</span>
+                        </div>
+                        <div class="col-33">
+                            5 <span>Experimentos</span>
+                        </div>
+                        <div class="col-33">
+                            105 <span>Medições</span>
+                        </div>
+                    </div>
+                </div><!--end social card footer section-->
+            </md-card><!--end social card section-->
+
+		<ion-infinite-scroll ng-if="false" on-infinite="" distance="1%"></ion-infinite-scroll>
+
+	</ion-content>
+
+</ion-view>
