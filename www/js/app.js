@@ -343,6 +343,18 @@ angular.module('FisiLabs', ['ionic','ngIOS9UIWebViewPatch', 'starter.controllers
                     }
                 }
             })
+            .state('app.experiment', {
+                url: "/experiment/{experimentId}",
+                params: {
+                    isAnimated:true
+                },
+                views: {
+                    'menuContent': {
+                        templateUrl: "app/experiment/tabs/tabs.html",
+                        controller: 'experimentTabsCtrl'
+                    }
+                }
+            });
             // End $stateProvider
 
         //Use $urlRouterProvider.otherwise(Url);

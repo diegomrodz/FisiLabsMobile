@@ -3,7 +3,6 @@
 	<md-toolbar class="bar-subheader md-tall md-primary toolbar-medium">
         <div>
             <h1>Nome da Sala de Aula</h1>
-
         </div>
     </md-toolbar><!--end toolbar section-->
 
@@ -15,23 +14,25 @@
                 <!--social profile content section-->
                 <md-content id="social-profile-content" class="md-padding">
 
-                	 <div class="row">
+					<md-subheader class="md-warn">Informações</md-subheader>
+
+                    <div class="row">
                         <div class="col-33">
-                            <i class="ion-card"></i>
+                            <i class="fa fa-users"></i>
                         </div>
                         <div class="col-66">Nome da Sala de Aula</div>
                     </div>
 
                      <div class="row">
                         <div class="col-33">
-                            <i class="ion-card"></i>
+                            <i class="fa fa-info"></i>
                         </div>
                         <div class="col-66">Breve descrição da sala de aula, blah, blah...</div>
                     </div>
 
-                	<div class="row">
+                    <div class="row">
                         <div class="col-33">
-                            <i class="ion-card"></i>
+                            <i class="fa fa-user"></i>
                         </div>
                         <div class="col-66">Nome do Instrutor</div>
                     </div>
@@ -39,7 +40,7 @@
 
 					<div class="row">
                         <div class="col-33">
-                            <i class="ion-card"></i>
+                            <i class="fa fa-calendar"></i>
                         </div>
                         <div class="col-66">18/09/2016</div>
                     </div>
@@ -51,7 +52,7 @@
                 <!--social profile content section-->
                 <md-content id="social-profile-content" class="md-padding">
 
-	               	<md-card ng-repeat="i in [1,2,3,4]" ng-click="navigateTo('app.classroom', {classroomId: 1})" class="social-card">
+	               	<md-card ng-repeat="i in [1,2,3,4]" ng-click="navigateTo('app.experiment', {experimentId: 1})" class="social-card">
 		                <md-card-content>
 		                    <md-list-item class="md-2-line md-no-proxy" role="listitem">
 		                        
@@ -86,20 +87,23 @@
             <md-tab label="Alunos">
                 <md-content >
 
-					<div class="list">
-
 					    <a ng-repeat="i in [1,2,3,4,5]" class="item item-avatar" href="#">
-					      <img src="venkman.jpg">
+					      <img src="img/profileAvatar.jpg">
 					      <h2>Venkman</h2>
 					      <p>Back off, man. I'm a scientist.</p>
 					    </a>
-					    
-
-					</div>
 
                 </md-content>
             </md-tab>
         </md-tabs>
 	</ion-content>
+
+	<!--button section-->
+    <div class="footer-fab-bar">
+        <a class="md-button md-accent md-fab fab-footer" aria-label="Add">
+            <i class="ion ion-plus"></i>
+        </a>
+    </div>
+    <!--end button section-->
 
 </ion-view>

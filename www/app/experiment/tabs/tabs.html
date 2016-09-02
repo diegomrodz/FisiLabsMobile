@@ -1,0 +1,134 @@
+<style scoped>
+    
+    span.item-note {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+    }
+
+</style>
+
+
+<ion-view view-title="">
+
+	<md-toolbar class="bar-subheader md-tall md-primary toolbar-medium">
+        <div>
+            <h1>Nome do Experimento</h1>
+        </div>
+    </md-toolbar><!--end toolbar section-->
+
+	<ion-content>
+		<div style="padding: 80px 0px;"></div>
+
+		<md-tabs class="ng-hide" ng-show="!loading" md-dynamic-height md-border-bottom>
+            <md-tab label="Sobre">
+                <!--social profile content section-->
+                <md-content id="social-profile-content" class="md-padding">
+
+					<md-subheader class="md-warn">Informações</md-subheader>
+
+                    <div class="row">
+                        <div class="col-33">
+                            <i class="ion-card"></i>
+                        </div>
+                        <div class="col-66">Nome do Experimento</div>
+                    </div>
+
+                     <div class="row">
+                        <div class="col-33">
+                            <i class="ion-card"></i>
+                        </div>
+                        <div class="col-66">Breve descrição do experimento, blah, blah...</div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-33">
+                            <i class="ion-card"></i>
+                        </div>
+                        <div class="col-66">Nome da Sala de Aula</div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-33">
+                            <i class="ion-card"></i>
+                        </div>
+                        <div class="col-66">Nome do Criador</div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-33">
+                            <i class="ion-card"></i>
+                        </div>
+                        <div class="col-66">Equipamento de Medição</div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-33">
+                            <i class="ion-card"></i>
+                        </div>
+                        <div class="col-66">Erro de Escala</div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-33">
+                            <i class="ion-card"></i>
+                        </div>
+                        <div class="col-66">Figuras Significativas</div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-33">
+                            <i class="ion-card"></i>
+                        </div>
+                        <div class="col-66">Unidade</div>
+                    </div>
+
+
+
+					<div class="row">
+                        <div class="col-33">
+                            <i class="ion-card"></i>
+                        </div>
+                        <div class="col-66">18/09/2016</div>
+                    </div>
+
+
+                </md-content><!--end social profile content section-->
+            </md-tab>
+            <md-tab label="Medições">
+                <!--social profile content section-->
+                <md-content id="social-profile-content">
+
+
+                    <a ng-repeat="i in [1,2,3,4,5]" class="item" href="#">
+                        <h2>{{ i * 0.87 }} m</h2>
+                        <p>Nome do Aluno</p>
+                        <span class="item-note">18/06/15 08:32</span>
+                    </a>
+
+
+                </md-content><!--end social profile content section-->
+            </md-tab>
+            <md-tab label="Participantes">
+                <md-content >
+
+                    <a ng-repeat="i in [1,2,3,4,5]" class="item item-avatar" href="#">
+                        <img src="img/profileAvatar.jpg">
+                        <h2>Venkman</h2>
+                        <p>Back off, man. I'm a scientist.</p>
+                    </a>
+
+                </md-content>
+            </md-tab>
+        </md-tabs>
+	</ion-content>
+
+	<!--button section-->
+    <div class="footer-fab-bar">
+        <a class="md-button md-accent md-fab fab-footer" aria-label="Add">
+            <i class="ion ion-plus"></i>
+        </a>
+    </div>
+    <!--end button section-->
+
+</ion-view>
