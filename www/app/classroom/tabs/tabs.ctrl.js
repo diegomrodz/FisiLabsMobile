@@ -1,9 +1,20 @@
 // Controller of dashboard.
-appControllers.controller('classroomTabsCtrl', function ($scope, $timeout, $state,$stateParams, $ionicHistory) {
+appControllers.controller('classroomTabsCtrl', function ($scope, $http, $timeout, $state,$stateParams, $ionicHistory) {
 
     //$scope.isAnimated is the variable that use for receive object data from state params.
     //For enable/disable row animation.
     $scope.isAnimated =  $stateParams.isAnimated;
+
+    $http.get(globalVariable.appUrl + '/api/classroom/detail/' + $stateParams.classroomId).then(
+        function onSuccess (response) {
+            $scope.classroom = response.data;
+
+            $scope.classroom.created_at = new Date($scope.classroom.created_at);
+        },
+        function onError (err) {
+            alert("Erro ao obter lista de salas de estudo.");
+        }
+    );
 
     // navigateTo is for navigate to other page 
     // by using targetPage to be the destination state. 

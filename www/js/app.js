@@ -11,6 +11,9 @@
 //Global variable use for setting color, start page, message, oAuth key.
 var db = null; //Use for SQLite database.
 window.globalVariable = {
+
+    appUrl: 'http://localhost:8000',
+
     //custom color style variable
     color: {
         appPrimaryColor: "",
@@ -39,8 +42,8 @@ window.globalVariable = {
 };// End Global variable
 
 
-angular.module('FisiLabs', ['ionic','ngIOS9UIWebViewPatch', 'starter.controllers', 'starter.services', 'ngMaterial', 'ngMessages', 'ngCordova'])
-    .run(function ($ionicPlatform, $cordovaSQLite, $rootScope, $ionicHistory, $state, $mdDialog, $mdBottomSheet) {
+angular.module('FisiLabs', ['ionic','ngIOS9UIWebViewPatch', 'starter.controllers', 'starter.services', 'ngMaterial', 'ngStorage', 'ngMessages', 'ngCordova'])
+    .run(function ($ionicPlatform, $cordovaSQLite, $rootScope, $http, AuthUser, $ionicHistory, $state, $mdDialog, $mdBottomSheet) {
 
         //Create database table of contracts by using sqlite database.
         //Table schema :
@@ -250,6 +253,19 @@ angular.module('FisiLabs', ['ionic','ngIOS9UIWebViewPatch', 'starter.controllers
             });
         });
 
+
+        AuthUser.get().then(
+            function onSuccess (auth_user) {
+
+                $http.defaults.headers.common.Authorization = 'Bearer ' + auth_user.token;
+
+                $state.go("app.dashboard");
+            },
+            function onError () {
+                $state.go("login");
+            }
+        );
+
     })
 
     .config(function ($ionicConfigProvider, $stateProvider, $urlRouterProvider, $mdThemingProvider, $mdIconProvider, $mdColorPalette, $mdIconProvider) {
@@ -313,6 +329,13 @@ angular.module('FisiLabs', ['ionic','ngIOS9UIWebViewPatch', 'starter.controllers
         //Learn more about ionNavView at http://ionicframework.com/docs/api/directive/ionNavView/
         //Learn more about  AngularUI Router's at https://github.com/angular-ui/ui-router/wiki
         $stateProvider
+
+            .state('login', {
+                url: "/login",
+                templateUrl: "app/login/login.html",
+                controller: 'loginCtrl'
+            })
+
             .state('app', {
                 url: "/app",
                 abstract: true,
@@ -354,10 +377,22 @@ angular.module('FisiLabs', ['ionic','ngIOS9UIWebViewPatch', 'starter.controllers
                         controller: 'experimentTabsCtrl'
                     }
                 }
-            });
+            })
+            .state('app.new_sample', {
+                url: "/experiment/{experimentId}/newSample",
+                params: {
+                    isAnimated: true
+                },
+                views: {
+                    'menuContent': {
+                        templateUrl: "app/experiment/sample/new.html",
+                        controller: "experimentNewSampleCtrl"
+                    }
+                }
+            })
             // End $stateProvider
 
         //Use $urlRouterProvider.otherwise(Url);
-        $urlRouterProvider.otherwise(window.globalVariable.startPage.url);
+        //$urlRouterProvider.otherwise(window.globalVariable.startPage.url);
 
     });

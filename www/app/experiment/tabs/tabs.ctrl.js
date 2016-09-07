@@ -1,9 +1,20 @@
 // Controller of dashboard.
-appControllers.controller('experimentTabsCtrl', function ($scope, $timeout, $state,$stateParams, $ionicHistory) {
+appControllers.controller('experimentTabsCtrl', function ($scope, $timeout, $http, $state,$stateParams, $ionicHistory) {
 
     //$scope.isAnimated is the variable that use for receive object data from state params.
     //For enable/disable row animation.
     $scope.isAnimated =  $stateParams.isAnimated;
+
+    $http.get(globalVariable.appUrl + '/api/experiment/detail/' + $stateParams.experimentId).then(
+        function onSuccess (response) {
+            $scope.experiment = response.data;
+
+            $scope.experiment.created_at = new Date($scope.experiment.created_at);
+        },
+        function onError (err) {
+            alert("Erro ao obter lista de salas de estudo.");
+        }
+    );
 
     // navigateTo is for navigate to other page 
     // by using targetPage to be the destination state. 

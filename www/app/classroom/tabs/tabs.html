@@ -2,14 +2,31 @@
 
 	<md-toolbar class="bar-subheader md-tall md-primary toolbar-medium">
         <div>
-            <h1>Nome da Sala de Aula</h1>
+            <h1>{{ classroom.name }}</h1>
         </div>
     </md-toolbar><!--end toolbar section-->
 
 	<ion-content>
 		<div style="padding: 80px 0px;"></div>
 
-		<md-tabs class="ng-hide" ng-show="!loading" md-dynamic-height md-border-bottom>
+        <style scoped>
+            #subscribe-btn {
+                font-size: 14px;
+                border-color: green;
+                min-height: 30px !important;
+                max-height: 30px !important;
+                line-height: 0px;
+            }
+
+            .is-subscribed {
+                font-size: 15px;
+                font-weight: bold;
+                color: green;
+            }
+
+        </style>
+
+		<md-tabs md-dynamic-height md-border-bottom>
             <md-tab label="Sobre">
                 <!--social profile content section-->
                 <md-content id="social-profile-content" class="md-padding">
@@ -20,21 +37,21 @@
                         <div class="col-33">
                             <i class="fa fa-users"></i>
                         </div>
-                        <div class="col-66">Nome da Sala de Aula</div>
+                        <div class="col-66">{{ classroom.name }}</div>
                     </div>
 
                      <div class="row">
                         <div class="col-33">
                             <i class="fa fa-info"></i>
                         </div>
-                        <div class="col-66">Breve descrição da sala de aula, blah, blah...</div>
+                        <div class="col-66">{{ classroom.description }}</div>
                     </div>
 
                     <div class="row">
                         <div class="col-33">
                             <i class="fa fa-user"></i>
                         </div>
-                        <div class="col-66">Nome do Instrutor</div>
+                        <div class="col-66">{{ classroom.instructor.name }}</div>
                     </div>
 
 
@@ -42,9 +59,29 @@
                         <div class="col-33">
                             <i class="fa fa-calendar"></i>
                         </div>
-                        <div class="col-66">18/09/2016</div>
+                        <div class="col-66">{{ classroom.created_at | date:'MM/dd/yyyy' }}</div>
                     </div>
 
+                    <div ng-if="classroom.subscription" class="row">
+                        <div class="col-33">
+                            <i class="fa fa-check-square-o"></i>
+                        </div>
+                        <div class="col-66 is-subscribed">
+                            Inscrito
+                        </div>
+                    </div>
+
+
+                    <div ng-if="!classroom.subscription" class="row">
+                        <div class="col-33">
+                            <i class="fa fa-check-square-o"></i>
+                        </div>
+                        <div class="col-66">
+                            <button id="subscribe-btn" class="button button-stable">
+                              Inscrever-se
+                            </button>        
+                        </div>
+                    </div>
 
                 </md-content><!--end social profile content section-->
             </md-tab>
@@ -52,17 +89,17 @@
                 <!--social profile content section-->
                 <md-content id="social-profile-content" class="md-padding">
 
-	               	<md-card ng-repeat="i in [1,2,3,4]" ng-click="navigateTo('app.experiment', {experimentId: 1})" class="social-card">
+	               	<md-card ng-repeat="experiment in classroom.experiments" ng-click="navigateTo('app.experiment', {experimentId: experiment.id})" class="social-card">
 		                <md-card-content>
 		                    <md-list-item class="md-2-line md-no-proxy" role="listitem">
 		                        
 		                        <div class="md-list-item-text">
-		                            <h3>Nome do Experimento</h3>
+		                            <h3>{{ experiment.name }}</h3>
 
 		                            <p>Criado por: Nome do Criador</p>
 		                        </div>
 		                    </md-list-item>
-		                    <p>Breve descrição da experimento, blah, blah, blah...</p>
+		                    <p>{{ experiment.description }}</p>
 		                </md-card-content>
 
 		                <!--social card footer section-->
@@ -72,7 +109,7 @@
 		                            5 <span>Alunos</span>
 		                        </div>
 		                        <div class="col-33">
-		                            15 <span>Medições</span>
+		                            {{ experiment.samples_qtd }} <span>Medições</span>
 		                        </div>
 		                        <div class="col-33">
 		                            Aberto
@@ -87,9 +124,9 @@
             <md-tab label="Alunos">
                 <md-content >
 
-					    <a ng-repeat="i in [1,2,3,4,5]" class="item item-avatar" href="#">
+					    <a ng-repeat="student in classroom.students" class="item item-avatar" href="#">
 					      <img src="img/profileAvatar.jpg">
-					      <h2>Venkman</h2>
+					      <h2>{{ student.name }}</h2>
 					      <p>Back off, man. I'm a scientist.</p>
 					    </a>
 
@@ -97,13 +134,5 @@
             </md-tab>
         </md-tabs>
 	</ion-content>
-
-	<!--button section-->
-    <div class="footer-fab-bar">
-        <a class="md-button md-accent md-fab fab-footer" aria-label="Add">
-            <i class="ion ion-plus"></i>
-        </a>
-    </div>
-    <!--end button section-->
 
 </ion-view>

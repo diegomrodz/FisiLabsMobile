@@ -1,21 +1,31 @@
 <ion-view view-title="Home">
 
 	<ion-content id="home-feed">
-		
+
+        <style scoped>
+            div.open-label {
+                color: green;
+            }
+
+            div.closed-label {
+                color: red;
+            }
+        </style>
+
 		<ion-refresher pulling-text="Atualizar" on-refresh=""></ion-refresher>
 
 		<!--social card section-->
-            <md-card ng-repeat="i in [1,2,3,4]" ng-click="navigateTo('app.classroom', {classroomId: 1})" class="social-card">
+            <md-card ng-repeat="classroom in classrooms" ng-click="navigateTo('app.classroom', {classroomId: classroom.id})" class="social-card">
                 <md-card-content>
                     <md-list-item class="md-2-line md-no-proxy" role="listitem">
                         
                         <div class="md-list-item-text">
-                            <h3>Nome da Sala de Aula</h3>
+                            <h3>{{ classroom.name }}</h3>
 
-                            <p>Instrutor: Nome do Instrutor</p>
+                            <p>Instrutor: {{ classroom.instructor_name }}</p>
                         </div>
                     </md-list-item>
-                    <p>Breve descrição da sala de aula, blah, blah...</p>
+                    <p>{{ classroom.description }}</p>
                 </md-card-content>
 
                 <!--social card footer section-->
@@ -25,11 +35,17 @@
                             15 <span>Alunos</span>
                         </div>
                         <div class="col-33">
-                            5 <span>Experimentos</span>
+                            {{ classroom.experiments_qtd }} <span>Experimentos</span>
                         </div>
-                        <div class="col-33">
-                            105 <span>Medições</span>
+
+                        <div ng-if="classroom.is_open" class="col-33 open-label">
+                            Aberto
                         </div>
+                        
+                        <div ng-if="!classroom.is_open" class="col-33 closed-label">
+                            Fechado
+                        </div>
+
                     </div>
                 </div><!--end social card footer section-->
             </md-card><!--end social card section-->

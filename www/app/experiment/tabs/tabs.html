@@ -1,26 +1,38 @@
-<style scoped>
-    
-    span.item-note {
-        position: absolute;
-        top: 15px;
-        right: 15px;
-    }
-
-</style>
-
 
 <ion-view view-title="">
 
 	<md-toolbar class="bar-subheader md-tall md-primary toolbar-medium">
         <div>
-            <h1>Nome do Experimento</h1>
+            <h1>{{ experiment.name }}</h1>
         </div>
     </md-toolbar><!--end toolbar section-->
 
 	<ion-content>
 		<div style="padding: 80px 0px;"></div>
 
-		<md-tabs class="ng-hide" ng-show="!loading" md-dynamic-height md-border-bottom>
+        <style scoped>
+            
+            span.item-note {
+                position: absolute;
+                top: 15px;
+                right: 15px;
+            }
+
+            .info-label {
+                font-size: 14px !important;
+                font-weight: bold;
+            }
+
+            .info-data {
+                font-size: 18px !important;
+                display: table-cell;
+                text-align: center;
+                vertical-align: middle;
+            }
+
+        </style>
+
+		<md-tabs  md-dynamic-height md-border-bottom>
             <md-tab label="Sobre">
                 <!--social profile content section-->
                 <md-content id="social-profile-content" class="md-padding">
@@ -31,79 +43,128 @@
                         <div class="col-33">
                             <i class="ion-card"></i>
                         </div>
-                        <div class="col-66">Nome do Experimento</div>
+                        <div class="col-66">{{ experiment.name }}</div>
                     </div>
 
                      <div class="row">
                         <div class="col-33">
-                            <i class="ion-card"></i>
+                            <i class="fa fa-info"></i>
                         </div>
-                        <div class="col-66">Breve descrição do experimento, blah, blah...</div>
+                        <div class="col-66">{{ experiment.description }}</div>
                     </div>
 
                     <div class="row">
                         <div class="col-33">
-                            <i class="ion-card"></i>
+                            <i class="fa fa-users"></i>
                         </div>
-                        <div class="col-66">Nome da Sala de Aula</div>
+                        <div class="col-66">{{ experiment.classroom.name }}</div>
                     </div>
 
                     <div class="row">
                         <div class="col-33">
-                            <i class="ion-card"></i>
+                            <i class="fa fa-user"></i>
                         </div>
-                        <div class="col-66">Nome do Criador</div>
+                        <div class="col-66">{{ experiment.creator.name }}</div>
                     </div>
 
                     <div class="row">
                         <div class="col-33">
-                            <i class="ion-card"></i>
+                            <i class="fa fa-calendar"></i>
                         </div>
-                        <div class="col-66">Equipamento de Medição</div>
+                        <div class="col-66">{{ experiment.created_at | date:'MM/dd/yyyy' }}</div>
+                    </div>
+
+                    <md-subheader class="md-warn">Detalhes do Experimento</md-subheader>
+
+                    <div class="row">
+                        <div class="col-33 info-label">
+                            Equipamento de Medição
+                        </div>
+                        <div class="col-66 info-data">{{ experiment.measure_device }}</div>
                     </div>
 
                     <div class="row">
-                        <div class="col-33">
-                            <i class="ion-card"></i>
+                        <div class="col-33 info-label">
+                            Erro de Escala
                         </div>
-                        <div class="col-66">Erro de Escala</div>
+                        <div class="col-66 info-data">{{ experiment.scale_error | number:experiment.sig_figures }} {{ experiment.unit }}</div>
                     </div>
 
                     <div class="row">
-                        <div class="col-33">
-                            <i class="ion-card"></i>
+                        <div class="col-33 info-label">
+                            Erro Sistemático
                         </div>
-                        <div class="col-66">Figuras Significativas</div>
+                        <div class="col-66 info-data">{{ experiment.scale_error | number:experiment.sig_figures }} {{ experiment.unit }}</div>
                     </div>
 
                     <div class="row">
-                        <div class="col-33">
-                            <i class="ion-card"></i>
+                        <div class="col-33 info-label">
+                            Figuras Significativas
                         </div>
-                        <div class="col-66">Unidade</div>
+                        <div class="col-66 info-data">{{ experiment.sig_figures }}</div>
                     </div>
 
-
-
-					<div class="row">
-                        <div class="col-33">
-                            <i class="ion-card"></i>
+                    <div class="row">
+                        <div class="col-33 info-label">
+                            Unidade
                         </div>
-                        <div class="col-66">18/09/2016</div>
+                        <div class="col-66 info-data">{{ experiment.unit_name }} ({{ experiment.unit }})</div>
                     </div>
 
 
                 </md-content><!--end social profile content section-->
+            </md-tab>
+            <md-tab label="Resultados">
+                <md-content id="social-profile-content" class="md-padding">
+
+                    <md-subheader class="md-warn">Erros Estatísticos</md-subheader>
+
+                    <div class="row">
+                        <div class="col-33 info-label">
+                            Média
+                        </div>
+                        <div class="col-66 info-data">
+                            {{ experiment.average | number:experiment.sig_figures }} {{ experiment.unit }}
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-33 info-label">
+                            Desvio Quadrático
+                            Médio
+                        </div>
+                        <div class="col-66 info-data">{{ experiment.quadratic_average_deviation | number:experiment.sig_figures }} {{ experiment.unit }}</div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-33 info-label">
+                            Desvio Padrão
+                        </div>
+                        <div class="col-66 info-data">
+                            {{ experiment.standard_deviation | number:experiment.sig_figures }} {{ experiment.unit }}
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-33 info-label">
+                            Erro Total
+                        </div>
+                        <div class="col-66 info-data">
+                            {{ experiment.total_error | number:experiment.sig_figures }} {{ experiment.unit }}
+                        </div>
+                    </div>
+
+                </md-content>
             </md-tab>
             <md-tab label="Medições">
                 <!--social profile content section-->
                 <md-content id="social-profile-content">
 
 
-                    <a ng-repeat="i in [1,2,3,4,5]" class="item" href="#">
-                        <h2>{{ i * 0.87 }} m</h2>
-                        <p>Nome do Aluno</p>
-                        <span class="item-note">18/06/15 08:32</span>
+                    <a ng-repeat="sample in experiment.samples" class="item" href="#">
+                        <h2>{{ sample.value | number:experiment.sig_figures }} {{ experiment.unit }}</h2>
+                        <p>{{ sample.user_name }}</p>
+                        <span class="item-note">{{ sample.created_at }}</span>
                     </a>
 
 
@@ -112,9 +173,9 @@
             <md-tab label="Participantes">
                 <md-content >
 
-                    <a ng-repeat="i in [1,2,3,4,5]" class="item item-avatar" href="#">
+                    <a ng-repeat="student in experiment.students" class="item item-avatar" href="#">
                         <img src="img/profileAvatar.jpg">
-                        <h2>Venkman</h2>
+                        <h2>{{ student.name }}</h2>
                         <p>Back off, man. I'm a scientist.</p>
                     </a>
 
@@ -124,8 +185,8 @@
 	</ion-content>
 
 	<!--button section-->
-    <div class="footer-fab-bar">
-        <a class="md-button md-accent md-fab fab-footer" aria-label="Add">
+    <div ng-if="experiment.is_open && experiment.subscription" class="footer-fab-bar">
+        <a ng-click="navigateTo('app.new_sample', {experimentId: experiment.id})" class="md-button md-accent md-fab fab-footer" aria-label="Add">
             <i class="ion ion-plus"></i>
         </a>
     </div>
