@@ -5,6 +5,37 @@ appControllers.controller('experimentNewSampleCtrl', function ($scope, $http, $t
     $scope.isAnimated =  $stateParams.isAnimated;
 
     $scope.sample = {};
+    $scope.hasClicked = false;
+
+    $http.get(globalVariable.appUrl + '/api/experiment/detail/' + $stateParams.experimentId).then(
+        function onSuccess (response) {
+            $scope.experiment = response.data;
+        },
+        function onError () {
+            alert("Erro ao obter dados sobre o experimento");
+        }
+    );
+
+    $scope.send = function () {
+        if ( ! $scope.hasClicked) {
+            var data = JSON.stringify($scope.sample);
+
+            $scope.hasClicked = true;
+
+            $http.post(globalVariable.appUrl + '/api/experiment/sample/' + $stateParams.experimentId + '/create', data).then(
+                function onSuccess (response) {
+                    alert("Medição enviada com sucesso.");
+                    $scope.navigateTo('app.experiment', {experimentId: $stateParams.experimentId});
+                    $scope.sample = {};
+                    $scope.hasClicked = false;
+                },
+                function onError () {
+                    alert("Erro enviar nova medição");
+                    $scope.hasClicked = false;
+                }
+            );
+        }
+    };
 
     // navigateTo is for navigate to other page 
     // by using targetPage to be the destination state. 

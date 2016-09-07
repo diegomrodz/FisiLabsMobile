@@ -336,6 +336,14 @@ angular.module('FisiLabs', ['ionic','ngIOS9UIWebViewPatch', 'starter.controllers
                 controller: 'loginCtrl'
             })
 
+            .state('logout', {
+                url: "/logout",
+                controller: function ($state, $localStorage) {
+                    $localStorage.$reset();
+                    $state.go('login');
+                }
+            })
+
             .state('app', {
                 url: "/app",
                 abstract: true,

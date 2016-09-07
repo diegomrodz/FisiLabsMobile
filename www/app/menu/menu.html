@@ -22,9 +22,9 @@
                 <img class="user-img" src="img/profileAvatar.jpg">
 
                 <p>
-                    <span class="title">Nome do Usuário</span>
+                    <span class="title">{{ authUser.user.name }}</span>
                     <br/>
-                    <span class="sub-title">usuário@email.com</span>
+                    <span class="sub-title">{{ authUser.user.email }}</span>
                 </p>
             </div><!--end menu header section-->
         </div> <!--menu content section-->
@@ -93,7 +93,7 @@
                     </div>
                 </div>
                 <md-subheader class="md-warn">Mais Opções</md-subheader>
-                <div class="row menu-item" ng-click="navigateTo('app.notelist')">
+                <div class="row menu-item" ng-click="navigateTo('logout')">
                     <div class="col-33">
                         <i class="fa fa-reply"></i>
                     </div>

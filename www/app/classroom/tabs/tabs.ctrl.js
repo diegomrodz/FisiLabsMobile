@@ -16,6 +16,24 @@ appControllers.controller('classroomTabsCtrl', function ($scope, $http, $timeout
         }
     );
 
+    $scope.hasClicked = false;
+
+    $scope.subscribe = function () {
+        if ( ! $scope.hasClicked) {
+            $scope.hasClicked = true;
+
+            $http.get(globalVariable.appUrl + '/api/classroom/subscribe/' + $stateParams.classroomId).then(
+                function onSuccess (response) {
+                    $scope.classroom.subscription = response.data;
+                },
+                function onError (err) {
+                    alert("Erro ao obter lista de salas de estudo.");
+                    $scope.hasClicked = false;
+                }
+            );
+        }
+    };
+
     // navigateTo is for navigate to other page 
     // by using targetPage to be the destination state. 
     // Parameter :  

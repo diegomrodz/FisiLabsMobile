@@ -1,9 +1,19 @@
 // Controller of menu toggle.
 // Learn more about Sidenav directive of angular material
 // https://material.angularjs.org/latest/#/demo/material.components.sidenav
-appControllers.controller('menuCtrl', function ($scope, $timeout, $mdUtil, $mdSidenav, $log, $ionicHistory, $state, $ionicPlatform, $mdDialog, $mdBottomSheet, $mdMenu, $mdSelect) {
-    
+appControllers.controller('menuCtrl', function (
+    $scope, $timeout, $mdUtil, $mdSidenav, $log, $ionicHistory, $state, $ionicPlatform, $mdDialog, $mdBottomSheet, $mdMenu, $mdSelect, AuthUser) {
+
     $scope.toggleLeft = buildToggler('left');
+
+    AuthUser.get().then(
+        function onSuccess (user) {
+            $scope.authUser = user;
+        },
+        function onError () {
+            alert("Erro ao obter dados do usuário.");
+        }
+    );
 
     // buildToggler is for create menu toggle.
     // Parameter :  

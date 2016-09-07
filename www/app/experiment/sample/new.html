@@ -1,10 +1,34 @@
 <ion-view title="Nova Medição">
 	
-    <ion-content>
+    <ion-content padding="true">
 
-    	<button class="button button-positive button-block">
-    		Adicionar
-    	</button>
+    	<style scoped>
+    		
+    		.sample-desc {
+    			font-size: 16px;
+    		}
+
+    	</style>
+
+    	<div class="row">
+    		<span class="sample-desc">Insira uma nova medição ao experimento {{ experiment.name }} da sala de estudo {{ experiment.classroom.name }}</span>
+    	</div>
+
+		<div class="list">
+		  
+		  <label class="item item-input item-stacked-label">
+		    <span class="input-label">Valor em {{ experiment.unit_name }}</span>
+		    <input type="number" ng-model="sample.value" placeholder="{{ 0.00 | number:experiment.sig_figures }} {{ experiment.unit }}">
+		  </label>
+
+		  <label class="item item-input">
+		    <textarea ng-model="sample.desc" placeholder="Descreva a medição aqui" rows="3"></textarea>
+		  </label>
+		</div>
+
+		<button ng-click="send()" class="button button-block button-positive">
+		  Enviar
+		</button>
 
     </ion-content>
 
