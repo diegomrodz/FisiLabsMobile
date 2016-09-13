@@ -32,10 +32,10 @@
                 <div class="social-card-footer">
                     <div class="row-content" layout="row">
                         <div class="col-33">
-                            15 <span>Alunos</span>
+                            {{ classroom.subscriptions.length }} <span>Alunos</span>
                         </div>
                         <div class="col-33">
-                            {{ classroom.experiments_qtd }} <span>Experimentos</span>
+                            {{ classroom.experiments.length }} <span>Experimentos</span>
                         </div>
 
                         <div ng-if="classroom.is_open" class="col-33 open-label">

@@ -41,7 +41,7 @@
 
                     <div class="row">
                         <div class="col-33">
-                            <i class="ion-card"></i>
+                            <i class="fa fa-flask"></i>
                         </div>
                         <div class="col-66">{{ experiment.name }}</div>
                     </div>
@@ -83,21 +83,21 @@
                         <div class="col-66 info-data">{{ experiment.measure_device }}</div>
                     </div>
 
-                    <div class="row">
+                    <div class="row" ng-if="experiment.scale_error > 0">
                         <div class="col-33 info-label">
                             Erro de Escala
                         </div>
                         <div class="col-66 info-data">{{ experiment.scale_error | number:experiment.sig_figures }} {{ experiment.unit }}</div>
                     </div>
 
-                    <div class="row">
+                    <div class="row" ng-if="experiment.scale_error > 0">
                         <div class="col-33 info-label">
                             Erro Sistemático
                         </div>
-                        <div class="col-66 info-data">{{ experiment.scale_error | number:experiment.sig_figures }} {{ experiment.unit }}</div>
+                        <div class="col-66 info-data">{{ experiment.scale_error / 2 | number:experiment.sig_figures }} {{ experiment.unit }}</div>
                     </div>
 
-                    <div class="row">
+                    <div class="row" ng-if="experiment.sig_figures > 0">
                         <div class="col-33 info-label">
                             Figuras Significativas
                         </div>
@@ -117,18 +117,25 @@
             <md-tab label="Resultados">
                 <md-content id="social-profile-content" class="md-padding">
 
-                    <md-subheader class="md-warn">Erros Estatísticos</md-subheader>
+                    <md-subheader class="md-warn">Resultados</md-subheader>
 
                     <div class="row">
                         <div class="col-33 info-label">
-                            Média
+                            Valor Médio
                         </div>
-                        <div class="col-66 info-data">
+                        <div class="col-66 info-data" ng-if="experiment.scale_error > 0">
+                            {{ experiment.average | number:experiment.sig_figures }}  &plusmn; {{ experiment.total_error | number:experiment.sig_figures }} {{ experiment.unit }}
+                        </div>
+
+                        <div class="col-66 info-data" ng-if="experiment.scale_error == 0">
                             {{ experiment.average | number:experiment.sig_figures }} {{ experiment.unit }}
                         </div>
+
                     </div>
 
-                    <div class="row">
+                    <md-subheader ng-if="experiment.scale_error > 0" class="md-warn">Erros Estatísticos</md-subheader>
+
+                    <div ng-if="experiment.scale_error > 0" class="row">
                         <div class="col-33 info-label">
                             Desvio Quadrático
                             Médio
@@ -136,7 +143,7 @@
                         <div class="col-66 info-data">{{ experiment.quadratic_average_deviation | number:experiment.sig_figures }} {{ experiment.unit }}</div>
                     </div>
 
-                    <div class="row">
+                    <div ng-if="experiment.scale_error > 0" class="row">
                         <div class="col-33 info-label">
                             Desvio Padrão
                         </div>
@@ -145,7 +152,7 @@
                         </div>
                     </div>
 
-                    <div class="row">
+                    <div ng-if="experiment.scale_error > 0" class="row">
                         <div class="col-33 info-label">
                             Erro Total
                         </div>
@@ -162,7 +169,10 @@
 
 
                     <a ng-repeat="sample in experiment.samples" class="item" href="#">
-                        <h2>{{ sample.value | number:experiment.sig_figures }} {{ experiment.unit }}</h2>
+                        <h2 ng-if="experiment.scale_error > 0">{{ sample.value | number:experiment.sig_figures }} &plusmn; {{ experiment.total_error | number:experiment.sig_figures }} {{ experiment.unit }}</h2>
+
+                        <h2 ng-if="experiment.scale_error == 0">{{ sample.value }} {{ experiment.unit }}</h2>
+
                         <p>{{ sample.user_name }}</p>
                         <span class="item-note">{{ sample.created_at }}</span>
                     </a>

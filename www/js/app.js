@@ -12,7 +12,7 @@
 var db = null; //Use for SQLite database.
 window.globalVariable = {
 
-    appUrl: 'http://localhost:8000',
+    appUrl: 'http://fisilabs.lwstudios.cc',
 
     //custom color style variable
     color: {
@@ -312,8 +312,8 @@ angular.module('FisiLabs', ['ionic','ngIOS9UIWebViewPatch', 'starter.controllers
         //Learn more about material theme: https://material.angularjs.org/latest/#/Theming/01_introduction
         $mdThemingProvider
             .theme('default')
-            .primaryPalette('indigo')
-            .accentPalette('yellow');
+            .primaryPalette('teal')
+            .accentPalette('brown');
 
         appPrimaryColor = $mdColorPalette[$mdThemingProvider._THEMES.default.colors.primary.name]["500"]; //Use for get base color of theme.
 

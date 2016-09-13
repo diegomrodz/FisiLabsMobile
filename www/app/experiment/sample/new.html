@@ -5,7 +5,22 @@
     	<style scoped>
     		
     		.sample-desc {
-    			font-size: 16px;
+    			font-size: 23px;
+    			margin-top: 10px;
+    			margin-bottom: 10px;
+    		}
+
+    		.input-label {
+    			font-size: 25px;
+    		}
+
+    		.item {
+    			margin-bottom: 15px;
+    			border-color: transparent !important;
+    		}
+
+    		input {
+    			font-size: 18px !important;
     		}
 
     	</style>
@@ -17,8 +32,8 @@
 		<div class="list">
 		  
 		  <label class="item item-input item-stacked-label">
-		    <span class="input-label">Valor em {{ experiment.unit_name }}</span>
-		    <input type="number" ng-model="sample.value" placeholder="{{ 0.00 | number:experiment.sig_figures }} {{ experiment.unit }}">
+		    <span class="input-label">Valor em {{ experiment.unit_name }}s</span>
+		    <input type="number" ng-model="sample.value" placeholder="{{ 0.00 | number:experiment.sig_figures }} {{ experiment.unit }}(s)">
 		  </label>
 
 		  <label class="item item-input">
