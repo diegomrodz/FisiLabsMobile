@@ -12,7 +12,7 @@
 var db = null; //Use for SQLite database.
 window.globalVariable = {
 
-    appUrl: 'http://fisilabs.lwstudios.cc',
+    appUrl: 'http://localhost:8000',
 
     //custom color style variable
     color: {

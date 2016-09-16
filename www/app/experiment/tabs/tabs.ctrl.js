@@ -16,6 +16,30 @@ appControllers.controller('experimentTabsCtrl', function ($scope, $timeout, $htt
         }
     );
 
+
+    $scope.hasClicked = false;
+
+    $scope.subscribe = function () {
+        if ( ! $scope.hasClicked) {
+            $scope.hasClicked = true;
+
+            if ($scope.experiment.experiment_mode == "individual") {
+                $http.get(globalVariable.appUrl + '/api/experiment/subscribe/' + $stateParams.experimentId).then(
+                    function onSuccess (response) {
+                        $scope.classroom.subscription = response.data;
+                    },
+                    function onError (err) {
+                        alert("Erro ao obter lista de salas de estudo.");
+                        $scope.hasClicked = false;
+                    }
+                );
+            } else if ($scope.experiment.experiment_mode == "group") {
+                $scope.navigateTo('app.experiment_group_subscription', {'experimentId': $stateParams.experimentId});
+            }
+            
+        }
+    };
+
     // navigateTo is for navigate to other page 
     // by using targetPage to be the destination state. 
     // Parameter :  

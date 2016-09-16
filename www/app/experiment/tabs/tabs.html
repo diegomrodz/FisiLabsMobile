@@ -30,7 +30,34 @@
                 vertical-align: middle;
             }
 
+            #subscribe-btn {
+                font-size: 14px;
+                border-color: green;
+                min-height: 30px !important;
+                max-height: 30px !important;
+                line-height: 0px;
+            }
+
+            .is-subscribed {
+                font-size: 15px;
+                font-weight: bold;
+                color: green;
+            }
+
+            .sample-group {
+                margin-bottom: 0px !important;
+            }
+
+            .group-title {
+                margin-top: 18px;
+                margin-bottom: 2px;
+                padding-left: 10px;
+                font-size: 20px;
+                font-weight: bold;
+            }
+
         </style>
+
 
 		<md-tabs  md-dynamic-height md-border-bottom>
             <md-tab label="Sobre">
@@ -74,6 +101,28 @@
                         <div class="col-66">{{ experiment.created_at | date:'MM/dd/yyyy' }}</div>
                     </div>
 
+                    <div ng-if="experiment.subscription" class="row">
+                        <div class="col-33">
+                            <i class="fa fa-check-square-o"></i>
+                        </div>
+                        <div class="col-66 is-subscribed">
+                            Inscrito
+                        </div>
+                    </div>
+
+
+                    <div ng-if="!experiment.subscription" class="row">
+                        <div class="col-33">
+                            <i class="fa fa-check-square-o"></i>
+                        </div>
+                        <div class="col-66">
+                            <button id="subscribe-btn" ng-click="subscribe()" class="button button-stable">
+                              Inscrever-se
+                            </button>        
+                        </div>
+                    </div>
+
+
                     <md-subheader class="md-warn">Detalhes do Experimento</md-subheader>
 
                     <div class="row">
@@ -85,7 +134,7 @@
 
                     <div class="row" ng-if="experiment.scale_error > 0">
                         <div class="col-33 info-label">
-                            Erro de Escala
+                            Fundo de Escala
                         </div>
                         <div class="col-66 info-data">{{ experiment.scale_error | number:experiment.sig_figures }} {{ experiment.unit }}</div>
                     </div>
@@ -115,7 +164,7 @@
                 </md-content><!--end social profile content section-->
             </md-tab>
             <md-tab label="Resultados">
-                <md-content id="social-profile-content" class="md-padding">
+                <md-content id="social-profile-content" ng-if="experiment.experiment_mode == 'individual'" class="md-padding">
 
                     <md-subheader class="md-warn">Resultados</md-subheader>
 
@@ -162,10 +211,62 @@
                     </div>
 
                 </md-content>
+
+                <md-content id="social-profile-content" ng-if="experiment.experiment_mode == 'group'">
+                    
+                    <p ng-repeat-start="group in experiment.groups" class="group-title">Grupo 1</p>
+
+                    <md-subheader class="md-warn">Resultados</md-subheader>
+
+                    <div class="row">
+                        <div class="col-33 info-label">
+                            Valor Médio
+                        </div>
+                        <div class="col-66 info-data" ng-if="experiment.scale_error > 0">
+                            {{ group.average | number:group.sig_figures }}  &plusmn; {{ group.total_error | number:group.sig_figures }} {{ experiment.unit }}
+                        </div>
+
+                        <div class="col-66 info-data" ng-if="experiment.scale_error == 0">
+                            {{ group.average | number:group.sig_figures }} {{ experiment.unit }}
+                        </div>
+
+                    </div>
+
+                    <md-subheader ng-if="experiment.scale_error > 0" class="md-warn">Erros Estatísticos</md-subheader>
+
+                    <div ng-if="experiment.scale_error > 0" class="row">
+                        <div class="col-33 info-label">
+                            Desvio Quadrático
+                            Médio
+                        </div>
+                        <div class="col-66 info-data">{{ group.quadratic_average_deviation | number:group.sig_figures }} {{ experiment.unit }}</div>
+                    </div>
+
+                    <div ng-if="experiment.scale_error > 0" class="row">
+                        <div class="col-33 info-label">
+                            Desvio Padrão
+                        </div>
+                        <div class="col-66 info-data">
+                            {{ group.standard_deviation | number:group.sig_figures }} {{ experiment.unit }}
+                        </div>
+                    </div>
+
+                    <div ng-if="experiment.scale_error > 0" class="row">
+                        <div class="col-33 info-label">
+                            Erro Total
+                        </div>
+                        <div class="col-66 info-data">
+                            {{ group.total_error | number:group.sig_figures }} {{ experiment.unit }}
+                        </div>
+                    </div>
+
+                    <span ng-repeat-end></span>                        
+
+                </md-content>
+
             </md-tab>
             <md-tab label="Medições">
-                <!--social profile content section-->
-                <md-content id="social-profile-content">
+                <md-content ng-if="experiment.experiment_mode == 'individual'">
 
 
                     <a ng-repeat="sample in experiment.samples" class="item" href="#">
@@ -178,7 +279,29 @@
                     </a>
 
 
-                </md-content><!--end social profile content section-->
+                </md-content>
+                
+                <md-content ng-if="experiment.experiment_mode == 'group'">
+
+                    <div class="list sample-group" ng-repeat="group in experiment.groups">
+
+                        <div class="item item-divider">
+                            {{ group.name }}
+                        </div>
+
+                        <a ng-repeat="sample in group.samples" class="item" href="#">
+                            <h2 ng-if="experiment.scale_error > 0">{{ sample.value | number:experiment.sig_figures }} &plusmn; {{ experiment.total_error | number:experiment.sig_figures }} {{ experiment.unit }}</h2>
+
+                            <h2 ng-if="experiment.scale_error == 0">{{ sample.value }} {{ experiment.unit }}</h2>
+
+                            <p>{{ sample.user_name }}</p>
+                            <span class="item-note">{{ sample.created_at }}</span>
+                        </a>
+
+                    </div>
+
+                </md-content>
+
             </md-tab>
             <md-tab label="Participantes">
                 <md-content >
