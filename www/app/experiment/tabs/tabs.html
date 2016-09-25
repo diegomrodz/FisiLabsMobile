@@ -304,7 +304,8 @@
 
             </md-tab>
             <md-tab label="Participantes">
-                <md-content >
+                
+                <md-content ng-if="experiment.experiment_mode == 'individual'">
 
                     <a ng-repeat="student in experiment.students" class="item item-avatar" href="#">
                         <img src="img/profileAvatar.jpg">
@@ -313,6 +314,24 @@
                     </a>
 
                 </md-content>
+
+                <md-content ng-if="experiment.experiment_mode == 'group'">
+
+                    <div class="list sample-group" ng-repeat="group in experiment.groups">                    
+                        <div class="item item-divider">
+                            {{ group.name }}
+                        </div>
+
+                        <a ng-repeat="member in group.members" class="item item-avatar" href="#">
+                            <img src="img/profileAvatar.jpg">
+                            <h2>{{ member.user_name }}</h2>
+                            <p>Back off, man. I'm a scientist.</p>
+                        </a>
+
+                    </div>
+
+                </md-content>
+
             </md-tab>
         </md-tabs>
 	</ion-content>
