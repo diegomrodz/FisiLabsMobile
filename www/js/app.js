@@ -273,7 +273,7 @@ angular.module('FisiLabs', ['ionic','ngIOS9UIWebViewPatch', 'starter.controllers
 
         // Use for change ionic spinner to android pattern.
         $ionicConfigProvider.spinner.icon("android");
-        $ionicConfigProvider.views.swipeBackEnabled(false);
+        $ionicConfigProvider.views.swipeBackEnabled(true);
 
         // mdIconProvider is function of Angular Material.
         // It use for reference .SVG file and improve performance loading.
@@ -383,6 +383,18 @@ angular.module('FisiLabs', ['ionic','ngIOS9UIWebViewPatch', 'starter.controllers
                     'menuContent': {
                         templateUrl: "app/experiment/tabs/tabs.html",
                         controller: 'experimentTabsCtrl'
+                    }
+                }
+            })
+            .state('app.experiment_group_subscription', {
+                url: "/experiment/{experimentId}",
+                params: {
+                    isAnimated:true
+                },
+                views: {
+                    'menuContent': {
+                        templateUrl: "app/experiment/group/subscription.html",
+                        controller: 'experimentGroupSubscriptionCtrl'
                     }
                 }
             })

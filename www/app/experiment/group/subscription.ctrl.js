@@ -1,22 +1,35 @@
 // Controller of dashboard.
-appControllers.controller('classroomTabsCtrl', function ($scope, $http, $timeout, $state,$stateParams, $ionicHistory, ClassroomTabsService) {
+appControllers.controller('experimentGroupSubscriptionCtrl', function ($scope, $timeout, $http, $state, $stateParams, $ionicHistory, ExperimentTabsService, ExperimentGroupSubscriptionService) {
 
     //$scope.isAnimated is the variable that use for receive object data from state params.
     //For enable/disable row animation.
     $scope.isAnimated =  $stateParams.isAnimated;
 
-    $scope.classroom = ClassroomTabsService.get($stateParams.classroomId);
+    ExperimentGroupSubscriptionService.get($stateParams.experimentId).then(
+        function onSuccess (data) {
+            $scope.groups = data;
+        },
+        function onError () {
+        }
+    );
+
+    ExperimentTabsService.get($stateParams.experimentId).then(
+        function onSuccess (data) {
+            $scope.experiment = data;
+        },
+        function onError () {
+        }
+    );
 
     $scope.refresh = function () {
-        $http.get(globalVariable.appUrl + '/api/classroom/detail/' + $stateParams.classroomId).then(
+        $http.get(globalVariable.appUrl + '/api/experiment/groups/' + $stateParams.experimentId).then(
             function onSuccess (response) {
-                $scope.classroom = response.data;
-                $scope.classroom.created_at = new Date($scope.classroom.created_at);
+                $scope.groups = response.data;
 
-                ClassroomTabsService.set($stateParams.classroomId, $scope.classroom);
+                ExperimentGroupSubscriptionService.set($stateParams.experimentId, $scope.groups);
             },
             function onError (err) {
-                alert("Erro ao obter lista de salas de estudo.");
+                alert("Erro ao detalhes do experimento");
             }
         );
     };
@@ -25,19 +38,23 @@ appControllers.controller('classroomTabsCtrl', function ($scope, $http, $timeout
 
     $scope.hasClicked = false;
 
-    $scope.subscribe = function () {
+    $scope.subscribe = function (id) {
         if ( ! $scope.hasClicked) {
             $scope.hasClicked = true;
 
-            $http.get(globalVariable.appUrl + '/api/classroom/subscribe/' + $stateParams.classroomId).then(
+            $http.get(globalVariable.appUrl + '/api/experiment_group/subscribe/' + id).then(
                 function onSuccess (response) {
                     $scope.refresh();
+                    $scope.navigateTo("app.experiment", {
+                        experimentId: $stateParams.experimentId
+                    });
                 },
                 function onError (err) {
                     alert("Erro ao obter lista de salas de estudo.");
                     $scope.hasClicked = false;
                 }
             );
+        
         }
     };
 
